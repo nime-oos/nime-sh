@@ -86,6 +86,8 @@ var doc=document,flower=doc.querySelector('.flower'),petalPartMarkup='<div class
         analyser.connect(audioCtx.destination);
         analyser.fftSize = 64;
         dataArray = new Uint8Array(analyser.frequencyBinCount);
+        // las escenas que reaccionan al ritmo (js/escena-mixtape.js) conectan aquí su propio analizador
+        window.FuenteMusica = { ctx: audioCtx, fuente: source };
       }
 
       function addDot() {

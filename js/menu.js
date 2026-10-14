@@ -51,7 +51,10 @@
       borron: ['#140830', '#2a0f5a', '#8a2f86', '#ff9ad8', '#ffd27a', '#5ad8f0'], base: '#1d0b48', tinta: '#ffd27a', sombra: '#ff5ab8' },
     { id: 'virgen', enlace: 'virgen', lado: 'lado N', titulo: 'Virgen', src: "musica/Adolescent's Orquesta - Virgen (Audio Oficial).mp3",
       lrc: window.LETRA_VIRGEN_LRC, secciones: window.SECCIONES_VIRGEN,
-      borron: ['#2a0a1e', '#5a0f2e', '#d81e4a', '#f2c46a', '#8a1a3a', '#1a0612'], base: '#2a0a1e', tinta: '#f2c46a', sombra: '#d81e4a' }
+      borron: ['#2a0a1e', '#5a0f2e', '#d81e4a', '#f2c46a', '#8a1a3a', '#1a0612'], base: '#2a0a1e', tinta: '#f2c46a', sombra: '#d81e4a' },
+    { id: 'mixtape', enlace: 'alvafro', lado: 'lado O', titulo: 'Alvafro', src: 'musica/LATIN MAFIA, Fred again.. - Alvafro.mp3',
+      lrc: window.LETRA_MIXTAPE_LRC, secciones: window.SECCIONES_MIXTAPE,
+      borron: ['#0b1430', '#14244a', '#1e3a6a', '#3ad8ff', '#ff4ab8', '#c8955a'], base: '#0e1a36', tinta: '#f4efe6', sombra: '#ff4ab8' }
   ];
 
   // mini portadas dibujadas con marcador
@@ -210,14 +213,33 @@
       '<path d="M44 44 C46 40 54 40 56 45 M46 52 C50 55 54 53 55 50" stroke="#7a0a26" stroke-width="1.2" fill="none"/>' +
       '<circle cx="28" cy="70" r="6" fill="#d81e4a"/><circle cx="28" cy="70" r="3" fill="#ff7a96"/><circle cx="72" cy="70" r="6" fill="#ea5a8a"/><circle cx="72" cy="70" r="3" fill="#ffb8cc"/>' +
       '<path d="M44 21 C38 18 38 13 43 13 C46 13 48 16 50 18 C52 16 54 13 57 13 C62 13 62 18 56 21Z" fill="url(#mnVO)"/>' +
+      '</svg>',
+    mixtape: '<svg viewBox="0 0 100 100"><defs><linearGradient id="mnM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070d24"/><stop offset=".7" stop-color="#16285a"/><stop offset="1" stop-color="#2a3a6a"/></linearGradient></defs>' +
+      '<rect width="100" height="100" fill="url(#mnM)"/><path d="M30 76 C40 70 52 72 60 68 C70 66 84 70 100 66 V80 H30Z" fill="#0a1220"/>' +
+      '<circle cx="70" cy="46" r="19" fill="none" stroke="#3ad8ff" stroke-width="2.2"/><circle cx="70" cy="46" r="13" fill="none" stroke="#ff4ab8" stroke-width="1.6"/>' +
+      '<path d="M70 27 V65 M51 46 H89 M57 33 L83 59 M83 33 L57 59" stroke="#bfefff" stroke-width=".8" opacity=".8"/><path d="M70 46 L62 74 M70 46 L78 74" stroke="#6a7a9a" stroke-width="1.6"/>' +
+      '<path d="M48 22 V80 M66 4 V80 M84 4 V80" stroke="#1a1410" stroke-width="2"/><path d="M30 48 H100 M30 64 H100" stroke="#1a1410" stroke-width="1.4"/>' +
+      '<path d="M0 0 H86 L30 50 L0 42Z" fill="#c8955a"/><path d="M8 8 L60 2 M4 20 L44 14 M2 32 L30 28" stroke="#a87440" stroke-width="1" opacity=".7"/>' +
+      '<path d="M86 0 L30 50" stroke="#7a3a22" stroke-width="4"/>' +
+      '<path d="M0 40 L30 50 V82 L0 100Z" fill="#ece6da"/>' +
+      '<path d="M15 60 C9 54 5 58 8 63 C10 67 15 70 15 72 C15 70 20 67 22 63 C25 58 21 54 15 60Z" fill="#7aa8d8" stroke="#3a6aa8" stroke-width=".8"/>' +
+      '<rect x="4" y="50" width="5" height="6" fill="#5a8ac8" transform="skewY(15)"/><rect x="21" y="52" width="5" height="6" fill="#ff8ab8" transform="skewY(15)"/>' +
+      '<rect x="0" y="80" width="100" height="20" fill="#7a5a3a"/><path d="M52 84 C62 78 84 78 100 82 V100 H48Z" fill="#f2efe8"/>' +
+      '<path d="M8 88 l8 -2 l2 5 l-8 2Z M26 92 l9 -1 l1 5 l-9 1Z" fill="#e8e4dc"/>' +
+      '<path d="M36 100 L44 58 M50 100 L44 58 M38 90 H48 M40 80 H47 M42 70 H46" stroke="#c8ccd2" stroke-width="1.6"/><rect x="41" y="55" width="7" height="3" fill="#ff7a2a"/>' +
+      '<path d="M41 54 L40 40 H47 L47 54Z" fill="#e04a7a"/><circle cx="43.5" cy="37" r="3.2" fill="#2a1e1a"/><path d="M40 42 L30 30" stroke="#c89a7a" stroke-width="2" stroke-linecap="round"/>' +
       '</svg>'
   };
+  // la escena de "Alvafro" pega estas portaditas en su muro de collage y escribe la lista de canciones a mano
+  window.MiniPortadas = MINI;
+  window.ListaCanciones = CANCIONES.map(function (c) { return { id: c.id, lado: c.lado, titulo: c.titulo }; });
 
   // ---- menú ----
   var menu = document.createElement('nav');
   menu.id = 'discos';
   menu.setAttribute('aria-label', 'Canciones');
-  menu.innerHTML = '<div class="discos-titulo">canciones <span class="ecualizador"><i></i><i></i><i></i></span></div>';
+  menu.innerHTML = '<div class="discos-titulo" role="button" tabindex="0" aria-expanded="true">canciones <span class="ecualizador"><i></i><i></i><i></i></span>' +
+    '<span class="discos-ver">ver todas</span></div>';
   var botones = {};
   CANCIONES.forEach(function (c, i) {
     var b = document.createElement('button');
@@ -227,11 +249,22 @@
     b.innerHTML = '<span class="cinta"></span><span class="portadita">' + MINI[c.id] + '</span>' +
       '<span class="disco-lado">' + c.lado + '</span><span class="disco-nombre">' + c.titulo + '</span>' +
       '<svg class="circulo" viewBox="0 0 120 150" aria-hidden="true"><path pathLength="1" d="M60 6 C100 4 116 30 114 76 C112 122 96 146 58 144 C18 142 4 118 6 72 C8 30 26 8 66 10" fill="none" stroke="#d13a22" stroke-width="6" stroke-linecap="round"/></svg>';
-    b.addEventListener('click', function () { elegir(c.id); });
+    b.addEventListener('click', function () {
+      // recogido solo queda la portadita de la canción que suena: tocarla vuelve a pegar las demás
+      if (menu.classList.contains('recogido') || menu.classList.contains('cayendo')) return desplegar();
+      if (c.id === actual) return recoger();
+      if (elegir(c.id)) recoger(c.id);
+    });
     menu.appendChild(b);
     botones[c.id] = b;
   });
   document.body.appendChild(menu);
+  var tituloMenu = menu.querySelector('.discos-titulo');
+  function alternarMenu() { if (menu.classList.contains('recogido') || menu.classList.contains('cayendo')) desplegar(); else recoger(); }
+  tituloMenu.addEventListener('click', alternarMenu);
+  tituloMenu.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alternarMenu(); }
+  });
 
   // con tantas canciones el menú ya no cabe en pantallas angostas: se encoge lo justo (en celular va en dos filas)
   function acomodarMenu() {
@@ -244,6 +277,92 @@
   acomodarMenu();
   window.addEventListener('resize', acomodarMenu);
   if (document.fonts) document.fonts.ready.then(acomodarMenu);
+
+  // ---- portaditas que se caen: al elegir una canción las demás se despegan de la cinta y caen; la elegida se
+  // queda sola en la esquina. Tocarla (o el letrero "canciones") las vuelve a pegar. ----
+  var quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var tMenu = null, quedaId = null;
+  function escalaMenu() { return menu.getBoundingClientRect().width / (menu.offsetWidth || 1) || 1; }
+  function limpiarCaida() {
+    CANCIONES.forEach(function (o) {
+      var b = botones[o.id];
+      b.classList.remove('cae', 'vuelve');
+      b.style.transformOrigin = '';
+    });
+  }
+  function saltaTitulo() {
+    tituloMenu.classList.remove('salta');
+    void tituloMenu.offsetWidth;
+    tituloMenu.classList.add('salta');
+  }
+  // la portadita que se queda viaja desde donde estaba hasta su lugar nuevo (así no brinca)
+  function deslizar(b, antes) {
+    if (!b || !antes) return;
+    var ahora = b.getBoundingClientRect(), k = escalaMenu();
+    b.classList.remove('desliza');
+    b.classList.add('fijo');
+    b.style.setProperty('--fx', ((antes.left - ahora.left) / k).toFixed(1) + 'px');
+    b.style.setProperty('--fy', ((antes.top - ahora.top) / k).toFixed(1) + 'px');
+    void b.offsetWidth;
+    b.classList.remove('fijo');
+    b.classList.add('desliza');
+    b.style.setProperty('--fx', '0px');
+    b.style.setProperty('--fy', '0px');
+    setTimeout(function () { b.classList.remove('desliza'); }, 700);
+  }
+  // datos de cada caída: lo que baja hasta salir de la pantalla, hacia qué lado y cuánto gira
+  function rumbo(b, i, iQueda, k, lejosPrimero) {
+    var r = b.getBoundingClientRect(), lado = Math.random() < .5 ? -1 : 1, orden = Math.abs(i - iQueda);
+    b.style.setProperty('--caer', ((innerHeight - r.top + 80) / k).toFixed(0) + 'px');
+    b.style.setProperty('--dx', (lado * (20 + Math.random() * 80)).toFixed(0) + 'px');
+    b.style.setProperty('--giro', (lado * (40 + Math.random() * 110)).toFixed(0) + 'deg');
+    b.style.setProperty('--pelar', (lado * (12 + Math.random() * 16)).toFixed(0) + 'deg');
+    b.style.setProperty('--tarda', ((lejosPrimero ? CANCIONES.length - orden : orden) * 40 + Math.random() * 90).toFixed(0) + 'ms');
+    b.style.transformOrigin = lado < 0 ? '88% 0' : '12% 0'; // queda colgando de una esquina de la cinta
+  }
+  function recoger(idQueda) {
+    idQueda = idQueda || actual;
+    if (menu.classList.contains('recogido') || menu.classList.contains('cayendo') || !botones[idQueda]) return;
+    var k = escalaMenu(), ids = CANCIONES.map(function (o) { return o.id; }), iQ = ids.indexOf(idQueda);
+    quedaId = idQueda;
+    CANCIONES.forEach(function (o) { botones[o.id].classList.toggle('queda', o.id === idQueda); });
+    menu.classList.add('cayendo');
+    tituloMenu.setAttribute('aria-expanded', 'false');
+    CANCIONES.forEach(function (o, i) {
+      if (o.id === idQueda) return;
+      rumbo(botones[o.id], i, iQ, k, false);
+      botones[o.id].classList.add('cae');
+    });
+    clearTimeout(tMenu);
+    tMenu = setTimeout(function () {
+      var b = botones[quedaId], antes = b.getBoundingClientRect();
+      menu.classList.remove('cayendo');
+      menu.classList.add('recogido');
+      limpiarCaida();
+      acomodarMenu();
+      deslizar(b, antes);
+      saltaTitulo();
+    }, quieto ? 0 : 1650);
+  }
+  function desplegar() {
+    if (!menu.classList.contains('recogido') && !menu.classList.contains('cayendo')) return;
+    clearTimeout(tMenu);
+    var b = botones[quedaId] || botones[actual], antes = b && b.getBoundingClientRect();
+    menu.classList.remove('recogido', 'cayendo');
+    limpiarCaida();
+    acomodarMenu();
+    tituloMenu.setAttribute('aria-expanded', 'true');
+    deslizar(b, antes);
+    saltaTitulo();
+    if (quieto) return;
+    var k = escalaMenu(), ids = CANCIONES.map(function (o) { return o.id; }), iQ = ids.indexOf(quedaId);
+    CANCIONES.forEach(function (o, i) {
+      if (o.id === quedaId) return;
+      rumbo(botones[o.id], i, iQ, k, false);
+      botones[o.id].classList.add('vuelve');
+    });
+    tMenu = setTimeout(limpiarCaida, 1500);
+  }
 
   // ---- borrón de crayón para la transición ----
   var borron = document.createElement('canvas');
@@ -308,6 +427,15 @@
       botones[o.id].classList.toggle('activo', on);
       botones[o.id].setAttribute('aria-pressed', on);
     });
+    // con el menú recogido, la portadita que se queda es la de la canción nueva (al terminar una sigue la otra)
+    if (menu.classList.contains('recogido') && quedaId !== c.id) {
+      var nb = botones[c.id];
+      CANCIONES.forEach(function (o) { botones[o.id].classList.toggle('queda', o.id === c.id); });
+      quedaId = c.id;
+      nb.classList.remove('pega');
+      void nb.offsetWidth;
+      nb.classList.add('pega');
+    }
     CANCIONES.forEach(function (o) { document.body.classList.remove('cancion-' + o.id); });
     document.body.classList.add('cancion-' + c.id);
     window.cargarLetra(c.lrc, c.secciones);
@@ -316,7 +444,7 @@
   }
   function elegir(id, sinTransicion) {
     var c = CANCIONES.filter(function (o) { return o.id === id; })[0];
-    if (!c || cambiando || id === actual) return;
+    if (!c || cambiando || id === actual) return false;
     var sonando = !audio.paused || document.body.classList.contains('empezo');
     function cambiar() {
       document.body.classList.add('cambiando');
@@ -326,12 +454,13 @@
       if (sonando) { audio.currentTime = 0; audio.play().catch(function () {}); }
       requestAnimationFrame(function () { document.body.classList.remove('cambiando'); });
     }
-    if (sinTransicion) return cambiar();
+    if (sinTransicion) { cambiar(); return true; }
     cambiando = true;
     cubrir(c, function () {
       cambiar();
       setTimeout(function () { destapar(); cambiando = false; }, 650);
     });
+    return true;
   }
 
   // la música ya arrancó con el botón "Presioname": a partir de ahí el cambio también cambia el audio
@@ -342,9 +471,10 @@
     elegir(CANCIONES[(i + 1) % CANCIONES.length].id);
   });
 
-  // canción inicial: la del enlace (#humano, #piensas-en-mi, #luna, #labios-rotos, #sone, #luz-de-dia, #ciudad-de-las-luces, #igual-que-ayer, #es-por-ti, #just-the-way-you-are, #cant-take-my-eyes-off-you, #brillas, #virgen) o la del lado A
+  // canción inicial: la del enlace (#humano, #piensas-en-mi, #luna, #labios-rotos, #sone, #luz-de-dia, #ciudad-de-las-luces, #igual-que-ayer, #es-por-ti, #just-the-way-you-are, #cant-take-my-eyes-off-you, #brillas, #virgen, #alvafro) o la del lado A.
+  // Primero se busca por enlace y luego por id: #alvafro es la canción "Alvafro" (id "mixtape"), no "Piensas en mí" (id "alvafro").
   var hash = decodeURIComponent(location.hash.replace('#', ''));
-  var porEnlace = CANCIONES.filter(function (o) { return (o.enlace || o.id) === hash || o.id === hash; })[0];
+  var porEnlace = CANCIONES.filter(function (o) { return o.enlace === hash; })[0] || CANCIONES.filter(function (o) { return o.id === hash; })[0];
   var inicial = porEnlace ? porEnlace.id : 'nada';
   if (inicial === 'nada') { aplicar(CANCIONES[0]); } else { elegir(inicial, true); }
 })();

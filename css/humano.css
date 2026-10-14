@@ -195,7 +195,7 @@ body.sonando .ecualizador i:nth-child(3) { animation-delay: -.35s; }
   color: #161616;
   font: inherit;
   cursor: pointer;
-  transform: rotate(var(--rot));
+  transform: translate(var(--fx, 0px), var(--fy, 0px)) rotate(var(--rot));
   transition: transform .15s steps(2), opacity .3s;
   opacity: .78;
 }
@@ -237,6 +237,57 @@ body.sonando .ecualizador i:nth-child(3) { animation-delay: -.35s; }
 .disco.activo .circulo path { animation: trazar .7s steps(10) both; }
 .disco.activo .portadita { animation: boton-salta 1.4s steps(2) infinite; }
 
+/* ---- al elegir canción las demás portaditas se despegan de su cinta y se caen (js/menu.js) ---- */
+.disco.cae {
+  pointer-events: none;
+  animation: disco-cae 1.15s var(--tarda, 0ms) both;
+}
+@keyframes disco-cae {
+  0%   { transform: rotate(var(--rot)); animation-timing-function: cubic-bezier(.3, 1.6, .5, 1); }
+  /* se despega de una esquina y se queda colgando un instante */
+  24%  { transform: rotate(calc(var(--rot) + var(--pelar))); animation-timing-function: ease-in-out; }
+  34%  { transform: rotate(calc(var(--rot) + var(--pelar) * .55)); animation-timing-function: cubic-bezier(.55, 0, 1, .55); }
+  /* y cae acelerando, dando vueltas */
+  100% { transform: translate(var(--dx), var(--caer)) rotate(var(--giro)); }
+}
+/* recogido: solo queda la portadita de la canción que suena */
+#discos.recogido .disco:not(.queda) { display: none; }
+#discos.recogido .disco.queda { opacity: 1; }
+/* las demás vuelven a subir y se pegan con un manotazo */
+.disco.vuelve {
+  pointer-events: none;
+  animation: disco-vuelve .8s var(--tarda, 0ms) both;
+}
+@keyframes disco-vuelve {
+  0%   { transform: translate(var(--dx), var(--caer)) rotate(var(--giro)); animation-timing-function: cubic-bezier(.15, .7, .3, 1); }
+  72%  { transform: translate(0, -10px) rotate(calc(var(--rot) * -1.4)) scale(1.06); animation-timing-function: ease-in; }
+  86%  { transform: rotate(var(--rot)) scale(.96); }
+  100% { transform: rotate(var(--rot)); }
+}
+/* la que se queda se recorre a la esquina sin brincar */
+.disco.fijo { transition: none !important; }
+.disco.desliza { transition: transform .6s cubic-bezier(.3, 1.35, .5, 1), opacity .3s; }
+/* al terminar una canción (con el menú recogido) la siguiente se pega en su lugar */
+.disco.pega { animation: disco-pega .6s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes disco-pega {
+  0%   { transform: translateY(-40px) rotate(calc(var(--rot) * -3)) scale(1.2); opacity: 0; }
+  100% { transform: rotate(var(--rot)); opacity: 1; }
+}
+/* el letrero "canciones" también abre y cierra el menú */
+.discos-titulo { cursor: pointer; }
+.discos-titulo:focus-visible { outline: 3px solid #d13a22; outline-offset: 3px; }
+.discos-ver { display: none; margin-left: .35em; font-size: .78em; color: #d13a22; }
+#discos.recogido .discos-ver { display: inline; }
+.discos-titulo.salta { animation: titulo-salta .45s steps(3) both; }
+@keyframes titulo-salta {
+  0%   { opacity: 0; transform: rotate(3deg) translateY(-6px); }
+  100% { opacity: 1; transform: rotate(3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .disco.cae, .disco.vuelve, .disco.pega, .discos-titulo.salta { animation: none; }
+  .disco.desliza { transition: none; }
+}
+
 /* borrón de crayón que tapa la pantalla al cambiar de canción */
 #borron {
   position: fixed;
@@ -251,10 +302,10 @@ body.sonando .ecualizador i:nth-child(3) { animation-delay: -.35s; }
 #borron.fuera { opacity: 0; transition: opacity .6s steps(5); }
 
 @media (max-width: 480px) {
-  /* en celular las portaditas se acomodan en dos filas para que se alcancen todas */
+  /* en celular las portaditas se acomodan en dos filas (8 y 7) para que se alcancen todas */
   #discos { top: 14px; left: 10px; gap: 12px 6px; flex-wrap: wrap; max-width: calc(100vw - 20px); }
-  .disco { width: min(46px, calc((100vw - 58px) / 7)); padding: 4px 4px 3px; border-width: 2px; }
-  .disco .portadita { width: calc(min(46px, calc((100vw - 58px) / 7)) - 10px); height: calc(min(46px, calc((100vw - 58px) / 7)) - 10px); }
+  .disco { width: min(46px, calc((100vw - 64px) / 8)); padding: 4px 4px 3px; border-width: 2px; }
+  .disco .portadita { width: calc(min(46px, calc((100vw - 64px) / 8)) - 10px); height: calc(min(46px, calc((100vw - 64px) / 8)) - 10px); }
   .disco-nombre, .disco-lado { display: none; }
   .discos-titulo { font-size: 14px; }
   .flower-message { top: calc(9vh + 56px) !important; }

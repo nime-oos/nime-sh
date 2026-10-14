@@ -1,0 +1,1626 @@
+/* Escena "Alvafro" (LATIN MAFIA, Fred again..): hora 31 terminando el mixtape en un estudio en A, Ciudad de México.
+   Un cuarto en 3D de verdad: .mx-escenario pone la perspectiva y .mx-mano > .mx-raton > .mx-toma > .mx-cuarto
+   conservan el 3D (preserve-3d). Encima van los efectos de cámara en 2D (grano, viñeta, falla, sepia, letreros, teléfono).
+   Las clases de estado llevan prefijo mx- y las pone js/escena-mixtape.js según la letra. */
+#escena-mixtape {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s;
+  background: #070a18;
+}
+
+#escena-mixtape.visible {
+  opacity: 1;
+}
+
+body.cambiando #escena-mixtape {
+  transition: none !important;
+}
+
+#escena-mixtape svg {
+  display: block;
+}
+
+/* ---- la cámara ---- */
+#escena-mixtape .mx-pulso {
+  position: absolute;
+  inset: 0;
+}
+
+#escena-mixtape .mx-escenario {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+
+#escena-mixtape :is(.mx-mano, .mx-raton, .mx-toma) {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* pulso de cámara en mano */
+#escena-mixtape .mx-mano {
+  animation: mx-mano 11s ease-in-out infinite;
+}
+
+@keyframes mx-mano {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(4px, -3px) rotate(.16deg); }
+  50% { transform: translate(-3px, 2px) rotate(-.12deg); }
+  75% { transform: translate(2px, 2px) rotate(.1deg); }
+}
+
+/* el mouse gira el cuarto alrededor de su centro */
+#escena-mixtape .mx-raton {
+  transform-origin: 50% 50% -1000px;
+  transition: transform .6s ease-out;
+}
+
+/* tomas: la cámara se acerca a lo que importa en cada parte */
+#escena-mixtape .mx-toma {
+  transform-origin: 50% 50% -700px;
+  transition: transform 3.2s cubic-bezier(.45, .05, .25, 1);
+}
+
+#escena-mixtape .mx-toma.toma-inicio { transform: translate3d(0, -20px, -240px); transition-duration: 6s; }
+#escena-mixtape .mx-toma.toma-cassette { transform: translate3d(-330px, -190px, 420px); }
+#escena-mixtape .mx-toma.toma-nuestro { transform: translate3d(511px, 90px, 300px) rotateY(-25deg); }
+#escena-mixtape .mx-toma.toma-ventana { transform: translate3d(-160px, 70px, 280px); transition-duration: 6s; }
+#escena-mixtape .mx-toma.toma-tel { transform: translate3d(-70px, -30px, 110px); transition-duration: 5s; }
+#escena-mixtape .mx-toma.toma-sol { transform: translate3d(-90px, 60px, 230px); transition-duration: 10s; }
+#escena-mixtape .mx-toma.toma-fin { transform: translate3d(0, -20px, -200px); transition-duration: 14s; }
+
+#escena-mixtape .mx-cuarto {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* cada plano del cuarto */
+#escena-mixtape .mx-p {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#escena-mixtape .mx-p > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#escena-mixtape .mx-cartel {
+  transition: opacity 1.2s;
+}
+
+/* el pedazo de piso más cercano solo hace falta en pantallas verticales */
+#escena-mixtape .mx-piso-cerca {
+  display: none;
+}
+
+#escena-mixtape.mx-vertical .mx-piso-cerca {
+  display: block;
+}
+
+/* en vertical la cámara se mueve menos (el piso cercano queda muy cerca de la lente) */
+#escena-mixtape.mx-vertical .mx-toma.toma-cassette { transform: translate3d(-330px, -190px, 90px); }
+#escena-mixtape.mx-vertical .mx-toma.toma-inicio { transform: translate3d(0, -20px, -90px); }
+#escena-mixtape.mx-vertical .mx-toma.toma-fin { transform: translate3d(0, -20px, -80px); }
+
+/* ---- afuera: el cielo que amanece en saltos ---- */
+#escena-mixtape .mx-cielo > div {
+  position: absolute;
+  inset: 0;
+}
+
+#escena-mixtape .cielo-noche {
+  background: linear-gradient(to bottom, #02040c 0%, #050a1e 34%, #0b1638 62%, #1c2a58 80%, #3a3466 87%, #4a3a62 89%, #1a1830 100%);
+}
+
+#escena-mixtape .cielo-azul {
+  opacity: 0;
+  transition: opacity 3s;
+  background: linear-gradient(to bottom, #0a1438 0%, #1a2e64 44%, #3a5296 72%, #7a74b0 86%, #a07aa0 89%, #3a3050 100%);
+}
+
+#escena-mixtape .cielo-alba {
+  opacity: 0;
+  transition: opacity 3s;
+  background: linear-gradient(to bottom, #1e2c66 0%, #4c5aa2 32%, #b47aa8 60%, #ff9a7a 79%, #ffc890 87%, #ffd8a0 89%, #a07060 100%);
+}
+
+#escena-mixtape .cielo-dia {
+  opacity: 0;
+  transition: opacity 6s;
+  background: linear-gradient(to bottom, #5a96dc 0%, #8cbcec 40%, #e8dcd0 74%, #ffe2b4 86%, #ffd8a0 89%, #c8a080 100%);
+}
+
+#escena-mixtape .mx-cielo > div {
+  transition-property: opacity, visibility;
+}
+
+#escena-mixtape.mx-c2 .cielo-noche { visibility: hidden; transition: visibility 0s 3.2s; }
+#escena-mixtape.mx-c4 .cielo-azul { visibility: hidden; transition: visibility 0s 3.2s; }
+#escena-mixtape.mx-c7 .cielo-alba { visibility: hidden; transition: visibility 0s 6.2s; }
+#escena-mixtape:not(.mx-c1) :is(.cielo-azul, .cielo-alba, .cielo-dia),
+#escena-mixtape.mx-c4 .mx-cielo .estrellas,
+#escena-mixtape:not(.mx-c4) .mx-cielo .sol { visibility: hidden; transition: visibility 0s 4s; }
+#escena-mixtape.mx-c1 .cielo-azul { opacity: .5; }
+#escena-mixtape.mx-c2 .cielo-azul { opacity: 1; }
+#escena-mixtape.mx-c2 .cielo-alba { opacity: .35; }
+#escena-mixtape.mx-c3 .cielo-alba { opacity: .75; }
+#escena-mixtape.mx-c4 .cielo-alba { opacity: 1; }
+#escena-mixtape.mx-c6 .cielo-dia { opacity: .55; }
+#escena-mixtape.mx-c7 .cielo-dia { opacity: 1; }
+
+#escena-mixtape .mx-cielo .estrellas {
+  bottom: 36%;
+  transition: opacity 4s;
+}
+
+#escena-mixtape .mx-cielo :is(.estrellas, .nubes) svg {
+  width: 100%;
+  height: 100%;
+}
+
+#escena-mixtape.mx-c2 .mx-cielo .estrellas { opacity: .3; }
+#escena-mixtape.mx-c4 .mx-cielo .estrellas { opacity: 0; }
+
+#escena-mixtape .mx-cielo .sol {
+  inset: auto;
+  left: 46%;
+  top: 88%;
+  width: 10%;
+  aspect-ratio: 1;
+  margin: -5% 0 0 -5%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffdf0 0 26%, #ffe7a0 34%, rgba(255, 196, 110, .55) 46%, rgba(255, 170, 100, .18) 60%, rgba(255, 160, 90, 0) 70%);
+  opacity: 0;
+  transform: translateY(60%);
+  transition: transform 9s cubic-bezier(.3, .2, .3, 1), opacity 3s;
+}
+
+/* sale detrás de la rueda de la fortuna */
+#escena-mixtape.mx-c4 .mx-cielo .sol { opacity: 1; transform: translateY(-70%); }
+#escena-mixtape.mx-c5 .mx-cielo .sol { transform: translateY(-125%) scale(1.1); }
+#escena-mixtape.mx-c6 .mx-cielo .sol { transform: translateY(-175%) scale(1.25); }
+#escena-mixtape.mx-c7 .mx-cielo .sol { transform: translateY(-210%) scale(1.3); }
+
+#escena-mixtape .mx-cielo .nubes {
+  top: 42%;
+  bottom: 24%;
+  opacity: .05;
+  animation: mx-nubes 140s linear infinite;
+  transition: opacity 4s;
+}
+
+#escena-mixtape.mx-c3 .mx-cielo .nubes { opacity: .3; }
+#escena-mixtape.mx-c6 .mx-cielo .nubes { opacity: .5; }
+#escena-mixtape.mx-hyper .mx-cielo .nubes { opacity: .14; animation-duration: 4s; }
+
+@keyframes mx-nubes {
+  from { transform: translateX(-12%); }
+  to { transform: translateX(12%); }
+}
+
+/* ciudad y árboles son imágenes (de noche y de día) que se funden al amanecer */
+#escena-mixtape .mx-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#escena-mixtape :is(.mx-ciudad, .mx-arboles) .de-dia {
+  opacity: 0;
+  transition: opacity 3s;
+}
+
+#escena-mixtape.mx-c5 .mx-ciudad .de-dia { opacity: .7; }
+#escena-mixtape.mx-c6 :is(.mx-ciudad, .mx-arboles) .de-dia { opacity: 1; }
+#escena-mixtape.mx-c7 :is(.mx-ciudad, .mx-arboles) .de-noche { visibility: hidden; }
+
+#escena-mixtape .mx-estelas {
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .6s;
+}
+
+#escena-mixtape:is(.mx-hyper, .mx-climax):not(.mx-c6) .mx-estelas {
+  opacity: 1;
+}
+
+#escena-mixtape .mx-estelas i {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 22%;
+  border-radius: 9px;
+  background: repeating-linear-gradient(90deg, #ff4a3a 0 26%, transparent 26% 50%);
+  background-size: 50% 100%;
+}
+
+#escena-mixtape .mx-estelas i.roja { top: 30%; }
+#escena-mixtape .mx-estelas i.blanca { top: 62%; background-image: repeating-linear-gradient(90deg, #fff4d8 0 20%, transparent 20% 50%); }
+
+#escena-mixtape:is(.mx-hyper, .mx-climax) .mx-estelas i {
+  animation: mx-estela .8s linear infinite;
+}
+
+#escena-mixtape:is(.mx-hyper, .mx-climax) .mx-estelas i.blanca {
+  animation-direction: reverse;
+  animation-duration: .65s;
+}
+
+@keyframes mx-estela {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* rueda de la fortuna: gira en el compositor; las cabinas giran al revés y quedan derechas */
+#escena-mixtape .mx-rueda .halo-rueda {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(58, 216, 255, .2) 0, rgba(58, 216, 255, .16) 55%, rgba(255, 74, 184, .08) 70%, rgba(255, 74, 184, 0) 72%);
+  opacity: .55;
+  transition: opacity 2s;
+}
+
+#escena-mixtape .mx-rueda .giro {
+  position: absolute;
+  left: 9.21%;
+  top: 6.8%;
+  width: 81.58%;
+  aspect-ratio: 1;
+  animation: mx-gira-rueda 52s linear infinite;
+}
+
+@keyframes mx-gira-rueda {
+  to { transform: rotate(360deg); }
+}
+
+#escena-mixtape .mx-rueda :is(.aro, .luces) {
+  position: absolute;
+  inset: 0;
+}
+
+#escena-mixtape .mx-rueda :is(.aro, .luces) svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* los foquitos "corren": dos capas que se turnan */
+#escena-mixtape .mx-rueda .luces {
+  animation: mx-marquesina .9s steps(1) infinite;
+}
+
+#escena-mixtape .mx-rueda .luces-b {
+  animation-delay: -.45s;
+}
+
+@keyframes mx-marquesina {
+  50% { opacity: .15; }
+}
+
+#escena-mixtape .mx-rueda .cabina {
+  position: absolute;
+  width: 5.48%;
+  height: 7.26%;
+  margin-left: -2.74%;
+}
+
+#escena-mixtape .mx-rueda .cab {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 0;
+  animation: mx-gira-rueda 52s linear infinite reverse;
+}
+
+#escena-mixtape .mx-rueda .cab svg {
+  width: 100%;
+  height: 100%;
+}
+
+#escena-mixtape .mx-rueda :is(.r1, .r2, .r3, .rayo-r) {
+  transition: opacity 2s;
+}
+
+#escena-mixtape.mx-mientes .mx-rueda :is(.r1, .r2, .r3, .rayo-r) { stroke: #ff2a3a; }
+#escena-mixtape.mx-c3 .mx-rueda .r1 { opacity: .1; }
+#escena-mixtape.mx-c4 .mx-rueda :is(.r2, .rayo-r) { opacity: .08; }
+#escena-mixtape.mx-c5 .mx-rueda .r3 { opacity: 0; }
+#escena-mixtape.mx-c5 .mx-rueda .halo-rueda { opacity: 0 !important; }
+
+/* ---- el cuarto ---- */
+#escena-mixtape .mx-piso .pozo {
+  transition: opacity 3s;
+}
+
+#escena-mixtape.mx-c6 .mx-piso .pozo { opacity: .25; }
+
+#escena-mixtape .mx-luz-piso {
+  opacity: 0;
+  transition: opacity 6s;
+}
+
+#escena-mixtape.mx-c6 .mx-luz-piso { opacity: .35; }
+#escena-mixtape.mx-c7 .mx-luz-piso { opacity: .5; }
+
+/* ---- el muro del collage ---- */
+/* el muro es un plano (sus fotos se pintan juntas); solo mientras vuelan fotos en 3D conserva la profundidad */
+#escena-mixtape.mx-vuelo3d .mx-muro,
+#escena-mixtape.mx-vuelo3d .mx-muro .fotos {
+  transform-style: preserve-3d;
+}
+
+#escena-mixtape .mx-muro > div,
+#escena-mixtape .mx-muro .fotos > * {
+  position: absolute;
+}
+
+#escena-mixtape .mx-muro :is(.muro-fondo, .fotos, .sombra-muro, .grieta, .halo-corazon) {
+  inset: 0;
+}
+
+#escena-mixtape .mx-muro :is(.muro-fondo, .grieta) svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* fotos pegadas con cinta; los huecos vacíos son marcos de lápiz */
+#escena-mixtape .mx-foto {
+  background: #f7f5ef;
+  padding: 4px;
+  box-shadow: 1px 3px 4px rgba(30, 20, 10, .3);
+  transform: rotate(var(--r));
+  transition: opacity 1.2s, translate .9s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+#escena-mixtape .mx-foto > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1.4s, filter 1s;
+}
+
+#escena-mixtape .mx-foto .nota {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font: 700 19px/1 'Caveat', cursive;
+  color: #2a2a3a;
+  text-align: center;
+  transition: opacity 1.4s;
+}
+
+#escena-mixtape .cinta-f {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 40px;
+  height: 15px;
+  margin-left: -20px;
+  background: rgba(236, 226, 186, .82);
+  transform: rotate(calc(var(--r, 0deg) * -2));
+}
+
+#escena-mixtape .mx-foto:not(.puesta) {
+  background: transparent;
+  box-shadow: none;
+  outline: 2px dashed rgba(70, 60, 50, .32);
+  outline-offset: -2px;
+}
+
+#escena-mixtape .mx-foto:not(.puesta) > * {
+  opacity: 0;
+}
+
+/* "¿dónde está todo eso?": signos de pregunta en los huecos */
+#escena-mixtape .mx-foto::after {
+  content: '?';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 46px/1 'Caveat', cursive;
+  color: rgba(70, 60, 50, .55);
+  opacity: 0;
+  transition: opacity .6s;
+}
+
+#escena-mixtape.mx-donde .mx-foto:not(.puesta)::after {
+  opacity: 1;
+}
+
+/* la foto vuela desde el cuarto y se pega en el muro */
+#escena-mixtape.mx-vuelo3d .mx-foto.vuela {
+  animation: mx-vuela 1.3s cubic-bezier(.2, .7, .3, 1) both;
+  animation-delay: calc(var(--k) * 45ms);
+}
+
+/* fuera de las ráfagas, la foto se pega con un manotazo */
+#escena-mixtape:not(.mx-vuelo3d) .mx-foto.vuela {
+  animation: mx-pega-foto .7s cubic-bezier(.3, 1.5, .5, 1) both;
+}
+
+@keyframes mx-pega-foto {
+  0% { opacity: 0; transform: rotate(calc(var(--r) * -3)) scale(1.45); }
+  100% { opacity: 1; transform: rotate(var(--r)); }
+}
+
+@keyframes mx-vuela {
+  0% { opacity: 0; transform: translate3d(var(--vx), var(--vy), 560px) rotate(var(--vr)) rotateY(50deg); }
+  12% { opacity: 1; }
+  78% { transform: translate3d(0, 0, 10px) rotate(var(--r)) scale(1.05); }
+  100% { opacity: 1; transform: rotate(var(--r)); }
+}
+
+/* la tira de fotos de los dos */
+#escena-mixtape .mx-tira {
+  width: 68px;
+  padding: 5px 5px 4px;
+  background: #fbf9f3;
+  box-shadow: 1px 3px 6px rgba(30, 20, 10, .35);
+  transform: rotate(-3deg);
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#escena-mixtape .mx-tira img {
+  display: block;
+  width: 58px;
+  height: 46px;
+  margin-bottom: 4px;
+  object-fit: cover;
+}
+
+#escena-mixtape .mx-tira .tira-pie {
+  display: block;
+  font: 700 13px/1 'Caveat', cursive;
+  color: #c8322a;
+  text-align: center;
+}
+
+#escena-mixtape.mx-tira-on .mx-tira { opacity: 1; }
+#escena-mixtape.mx-nuestro .mx-tira { animation: mx-tira 1.1s cubic-bezier(.2, .8, .3, 1.2) both; }
+
+@keyframes mx-tira {
+  0% { opacity: 0; transform: translateY(-40px) rotate(18deg) scale(1.6); }
+  100% { opacity: 1; transform: rotate(-3deg); }
+}
+
+#escena-mixtape.mx-nuestro .mx-foto { opacity: .4; }
+
+#escena-mixtape .foco-nuestro {
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 190, .55), rgba(255, 236, 190, 0) 68%);
+  opacity: 0;
+  transition: opacity 1.4s;
+}
+
+#escena-mixtape.mx-nuestro .foco-nuestro { opacity: 1; }
+
+/* lo que habíamos sido: sepia; ya no recuerdo: se borran */
+#escena-mixtape.mx-sepia .mx-foto > img { filter: sepia(.95) saturate(.75) contrast(.92); }
+#escena-mixtape.mx-olvido :is(.mx-foto > img, .mx-foto .nota, .mx-tira img) { opacity: .05; }
+
+/* la linterna que busca */
+#escena-mixtape .linterna {
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 248, 226, .62) 0, rgba(255, 244, 214, .25) 38%, rgba(255, 244, 214, 0) 68%);
+  opacity: 0;
+  transition: opacity .8s;
+}
+
+#escena-mixtape.mx-donde .linterna {
+  opacity: 1;
+  animation: mx-busca 7s ease-in-out infinite;
+}
+
+@keyframes mx-busca {
+  0%, 100% { transform: translate(140px, 160px); }
+  22% { transform: translate(560px, 90px); }
+  45% { transform: translate(700px, 420px); }
+  70% { transform: translate(260px, 470px); }
+  85% { transform: translate(420px, 260px); }
+}
+
+/* la sombra del chico en el muro (la proyecta la lámpara del piso) */
+#escena-mixtape .sombra-muro {
+  opacity: .22;
+  transition: opacity 4s;
+}
+
+#escena-mixtape.mx-c6 .sombra-muro { opacity: .07; }
+#escena-mixtape.mx-manana .sombra-muro { opacity: 0; }
+
+/* la grieta: se rompe, la cosen con cinta y luego se llena de oro */
+#escena-mixtape .grieta :is(.raja, .raja-papel, .oro) {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+#escena-mixtape.mx-roto .grieta :is(.raja, .raja-papel) { stroke-dashoffset: 0; }
+#escena-mixtape.mx-rompe .grieta :is(.raja, .raja-papel) { animation: mx-raja 1.2s cubic-bezier(.6, 0, .3, 1) both; }
+
+@keyframes mx-raja {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+#escena-mixtape.mx-roto .mx-foto.izq { translate: -9px 3px; }
+#escena-mixtape.mx-roto .mx-foto.der { translate: 9px -3px; }
+
+#escena-mixtape .grieta .puntada {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+#escena-mixtape.mx-cicatriz .grieta .puntada {
+  animation: mx-puntada .45s steps(3) both;
+  animation-delay: calc(var(--k) * 260ms);
+}
+
+@keyframes mx-puntada {
+  from { opacity: 0; transform: scale(1.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+#escena-mixtape.mx-kintsugi .grieta .oro { stroke-dashoffset: 0; }
+#escena-mixtape.mx-dora .grieta .oro { animation: mx-raja 2.8s ease-in-out both; }
+
+#escena-mixtape .mx-muro .oro-brillo {
+  inset: 0;
+  opacity: 0;
+}
+
+#escena-mixtape .mx-muro .oro-brillo svg {
+  width: 100%;
+  height: 100%;
+}
+
+#escena-mixtape.mx-kintsugi .mx-muro .oro-brillo { opacity: .4; transition: opacity 2.5s 2.6s; }
+#escena-mixtape.mx-kintsugi .grieta .raja { opacity: 0; transition: opacity 2.5s; }
+
+/* el corazón completo brilla */
+#escena-mixtape .halo-corazon {
+  opacity: 0;
+  transition: opacity 2.5s;
+}
+
+#escena-mixtape.mx-completo .halo-corazon { opacity: .85; }
+#escena-mixtape.mx-c6 .halo-corazon { opacity: .5; }
+
+/* la lista de canciones del mixtape, a mano */
+#escena-mixtape .tracklist {
+  left: 112px;
+  top: 676px;
+  width: 214px;
+  padding: 12px 14px 14px;
+  background: #fbf8ef;
+  box-shadow: 2px 4px 8px rgba(30, 20, 10, .35);
+  transform: rotate(-3deg);
+  font: 700 17px/1.02 'Caveat', cursive;
+  color: #2a2a3a;
+}
+
+#escena-mixtape .tracklist b {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 24px;
+  color: #c8322a;
+}
+
+#escena-mixtape .tracklist .pista {
+  display: block;
+  white-space: nowrap;
+}
+
+#escena-mixtape .tracklist .pista::after {
+  content: ' ✓';
+  color: #2a8a5a;
+}
+
+#escena-mixtape .tracklist .pista.esta {
+  color: #c8322a;
+}
+
+#escena-mixtape .tracklist .pista.esta::after {
+  content: ' …';
+  color: #c8322a;
+}
+
+#escena-mixtape.mx-fin .tracklist .pista.esta::after {
+  content: ' ✓ ♡';
+}
+
+/* ---- la gente: poses del time-lapse ---- */
+#escena-mixtape .br,
+#escena-mixtape :is(.p-parado, .p-acostada, .p-dormido) {
+  display: none;
+}
+
+#escena-mixtape .sombra-muro .br.p-pega,
+#escena-mixtape[data-chico="pega"] :is(.mx-chico, .mx-chico-piso) .br.p-pega,
+#escena-mixtape[data-chico="alisa"] :is(.mx-chico, .mx-chico-piso) .br.p-alisa,
+#escena-mixtape[data-chico="baja"] :is(.mx-chico, .mx-chico-piso) .br.p-baja,
+#escena-mixtape[data-chico="mira"] :is(.mx-chico, .mx-chico-piso) .br.p-mira,
+#escena-mixtape[data-ayudante="sube"] .mx-ayudante .br.p-sube,
+#escena-mixtape[data-ayudante="revisa"] .mx-ayudante .br.p-revisa {
+  display: inline;
+}
+
+#escena-mixtape :is(.mx-chico, .mx-chico-piso, .mx-ayudante) .cabeza {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+#escena-mixtape[data-chico="baja"] .mx-chico .cabeza { transform: rotate(16deg) translate(6px, 4px); }
+#escena-mixtape[data-chico="mira"] .cabeza { transform: rotate(-9deg); }
+#escena-mixtape[data-ayudante="revisa"] .mx-ayudante .cabeza { transform: rotate(-12deg) translate(-4px, 6px); }
+
+#escena-mixtape .mx-chico-dentro {
+  position: absolute;
+  inset: 0;
+}
+
+#escena-mixtape .mx-chico-dentro svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#escena-mixtape[data-alto="3"] .mx-chico { translate: 0 -64px; }
+#escena-mixtape[data-capucha="parado"] .mx-encapuchado .p-agacha { display: none; }
+#escena-mixtape[data-capucha="parado"] .mx-encapuchado .p-parado { display: inline; }
+
+/* time-lapse: la gente cambia de lugar a saltos */
+#escena-mixtape[data-lugar="1"] .mx-ayudante { translate: 90px 0 30px; }
+#escena-mixtape[data-lugar="2"] .mx-ayudante { translate: -40px 0 -50px; }
+#escena-mixtape[data-lugar="3"] .mx-ayudante { translate: 160px 0 70px; }
+#escena-mixtape[data-lugar="1"] .mx-fondo-persona { translate: 150px 0; }
+#escena-mixtape[data-lugar="2"] .mx-fondo-persona { translate: -110px 0; }
+#escena-mixtape[data-lugar="3"] .mx-fondo-persona { translate: 330px 0 -40px; }
+#escena-mixtape[data-lugar="2"] .mx-encapuchado { translate: -180px 0 120px; }
+#escena-mixtape[data-lugar="3"] .mx-encapuchado { translate: 140px 0 -100px; }
+#escena-mixtape[data-lugar="1"] .mx-chica { translate: -50px 0; }
+#escena-mixtape[data-lugar="3"] .mx-chica { translate: 40px 0; }
+
+#escena-mixtape .mx-amigo,
+#escena-mixtape .mx-chico-piso,
+#escena-mixtape .mx-cor-juntos {
+  opacity: 0;
+}
+
+#escena-mixtape.mx-juntos .mx-amigo { opacity: 1; }
+#escena-mixtape.mx-juntos :is(.mx-encapuchado, .mx-caja) { opacity: 0; }
+#escena-mixtape.mx-juntos .mx-chica { translate: -40px 0; }
+#escena-mixtape.mx-manana :is(.mx-chico, .mx-ayudante, .mx-fondo-persona) { opacity: 0; }
+#escena-mixtape.mx-manana .mx-chico-piso { opacity: 1; }
+#escena-mixtape.mx-manana .mx-chica .p-sentada,
+#escena-mixtape.mx-manana .mx-amigo .p-sentado { display: none; }
+#escena-mixtape.mx-manana .mx-chica .p-acostada,
+#escena-mixtape.mx-manana .mx-amigo .p-dormido { display: inline; }
+
+/* corazones que suben de los dos */
+#escena-mixtape.mx-juntos:not(.mx-manana) .mx-cor-juntos { opacity: 1; }
+
+#escena-mixtape .mx-corazones {
+  position: absolute;
+  inset: 0;
+}
+
+#escena-mixtape .mx-corazones i {
+  position: absolute;
+  bottom: 0;
+  width: 13%;
+  aspect-ratio: 32 / 26;
+  opacity: 0;
+  animation: mx-sube 3.6s ease-out infinite;
+  animation-delay: var(--w);
+}
+
+#escena-mixtape .mx-corazones svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes mx-sube {
+  0% { opacity: 0; transform: translateY(0) scale(.6); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-330%) translateX(20%) scale(1.1); }
+}
+
+/* ---- equipo ---- */
+#escena-mixtape .mx-mesa .pantalla { transition: fill .4s; }
+#escena-mixtape.mx-mientes .mx-mesa .pantalla { fill: #2a0812; }
+#escena-mixtape.mx-mientes .mx-mesa .clip { opacity: .15; }
+#escena-mixtape .mx-mesa .onda { opacity: 0; }
+
+#escena-mixtape:is(.mx-mientes, .mx-escucho) .mx-mesa .onda {
+  opacity: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mx-onda .32s steps(2) infinite;
+}
+
+@keyframes mx-onda {
+  50% { transform: scaleY(-1.6); }
+}
+
+#escena-mixtape .mx-torres .lcd { transition: fill .4s; }
+#escena-mixtape.mx-mientes .mx-torres .lcd { fill: #ff2a3a; }
+
+#escena-mixtape.mx-climax .mx-torres .pad,
+#escena-mixtape.mx-hyper .mx-torres .pad {
+  animation: mx-pad .49s steps(1) infinite;
+  animation-delay: calc(var(--k) * -61ms);
+}
+
+@keyframes mx-pad {
+  50% { fill: #ff4ab8; }
+}
+
+#escena-mixtape .mx-bocina .aro {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  width: 46%;
+  aspect-ratio: 1;
+  margin: -23% 0 0 -23%;
+  border: 3px solid rgba(220, 240, 255, .7);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+#escena-mixtape:is(.mx-escucho, .mx-climax) .mx-bocina .aro {
+  animation: mx-aro 1.2s ease-out infinite;
+  animation-delay: calc(var(--k) * .4s);
+}
+
+@keyframes mx-aro {
+  0% { opacity: .9; transform: scale(.6); }
+  100% { opacity: 0; transform: scale(4); }
+}
+
+#escena-mixtape .mx-luz-roja .halo-rojo {
+  position: absolute;
+  left: 2.8%;
+  top: -9.4%;
+  width: 94.4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 58, 74, .55), rgba(255, 58, 74, 0) 70%);
+  animation: mx-respira 3s ease-in-out infinite;
+}
+
+@keyframes mx-respira {
+  50% { opacity: .55; }
+}
+
+/* lámparas de papel y lucecitas ("si estás aquí, no está tan mal") */
+#escena-mixtape .mx-nube .halo {
+  opacity: .3;
+  transition: opacity 2s;
+}
+
+#escena-mixtape.mx-aqui1 .mx-nube .halo { opacity: 1; }
+#escena-mixtape.mx-aqui1 .mx-nube.n2 .halo { transition-delay: .7s; }
+#escena-mixtape.mx-aqui1 .mx-nube.n3 .halo { transition-delay: 1.4s; }
+#escena-mixtape.mx-c6 .mx-nube .halo { opacity: .25; }
+
+#escena-mixtape .mx-guirnalda .foco-halo {
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+#escena-mixtape .mx-guirnalda .foco-bulbo {
+  transition: fill .3s;
+}
+
+#escena-mixtape.mx-aqui2 .mx-guirnalda .foco-halo {
+  opacity: 1;
+  transition-delay: calc(var(--k) * 110ms);
+}
+
+#escena-mixtape.mx-aqui2 .mx-guirnalda .foco-bulbo {
+  fill: #ffe8a8;
+  transition-delay: calc(var(--k) * 110ms);
+}
+
+#escena-mixtape.mx-c7 .mx-guirnalda .foco-halo { opacity: .25; }
+
+/* el casete ("eso que me habías pedido") */
+#escena-mixtape .mx-banco .halo-casete {
+  opacity: 0;
+  transition: opacity 1.2s;
+}
+
+#escena-mixtape.mx-cassette .mx-banco .halo-casete { opacity: 1; }
+
+#escena-mixtape .mx-banco .carrete {
+  position: absolute;
+  top: 31.7%;
+  width: 6.4%;
+  aspect-ratio: 1;
+  margin: -3.2% 0 0 -3.2%;
+  border-radius: 50%;
+  background:
+    linear-gradient(#1a1a1e, #1a1a1e) 50% 50% / 14% 72% no-repeat,
+    linear-gradient(#1a1a1e, #1a1a1e) 50% 50% / 72% 14% no-repeat,
+    #f2f2ee;
+}
+
+#escena-mixtape .mx-banco .carrete.c1 { left: 42.6%; }
+#escena-mixtape .mx-banco .carrete.c2 { left: 57.8%; top: 30.3%; }
+
+body.sonando #escena-mixtape .mx-banco .carrete {
+  animation: mx-gira 2.4s linear infinite;
+}
+
+body.sonando #escena-mixtape.mx-cassette .mx-banco .carrete {
+  animation-duration: .6s;
+}
+
+@keyframes mx-gira {
+  to { rotate: 360deg; }
+}
+
+#escena-mixtape .casete-etiqueta {
+  position: absolute;
+  left: 27%;
+  top: 23.3%;
+  width: 46%;
+  font: 700 9px/1 'Caveat', cursive;
+  color: #24160f;
+  text-align: center;
+  white-space: nowrap;
+  transform: rotate(-6deg);
+}
+
+#escena-mixtape .mx-lampara .halo-lampara {
+  transition: opacity 3s;
+}
+
+#escena-mixtape.mx-c6 .mx-lampara .halo-lampara { opacity: .3; }
+
+/* ---- efectos de cámara en 2D ---- */
+#escena-mixtape > :is(.mx-polvo, .mx-papeles, .mx-flotantes, .mx-sepia-capa, .mx-rayones, .mx-falla, .mx-pelicula, .mx-flash, .mx-final, .mx-dia) {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* luz de mañana y rayos de sol que entran por el ventanal (una sola capa) */
+#escena-mixtape .mx-dia {
+  background:
+    linear-gradient(128deg, rgba(255, 226, 170, 0) 50%, rgba(255, 226, 170, .2) 55%, rgba(255, 226, 170, 0) 60%),
+    linear-gradient(128deg, rgba(255, 226, 170, 0) 61%, rgba(255, 226, 170, .12) 63.5%, rgba(255, 226, 170, 0) 66%),
+    linear-gradient(128deg, rgba(255, 226, 170, 0) 68%, rgba(255, 226, 170, .22) 73%, rgba(255, 226, 170, 0) 78%),
+    linear-gradient(128deg, rgba(255, 226, 170, 0) 81%, rgba(255, 226, 170, .12) 83.5%, rgba(255, 226, 170, 0) 86%),
+    linear-gradient(250deg, rgba(255, 222, 176, .32), rgba(255, 226, 190, .07) 55%, rgba(255, 220, 180, 0));
+  opacity: 0;
+  transition: opacity 6s;
+}
+
+#escena-mixtape.mx-c5 .mx-dia { opacity: .45; }
+#escena-mixtape.mx-c6 .mx-dia { opacity: .8; }
+#escena-mixtape.mx-c7 .mx-dia { opacity: 1; }
+
+/* polvo flotando en la luz */
+#escena-mixtape .mx-polvo {
+  opacity: 0;
+  transition: opacity 4s;
+}
+
+#escena-mixtape.mx-rayos .mx-polvo { opacity: 1; }
+
+#escena-mixtape .mx-polvo i {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff3d6;
+  box-shadow: 0 0 6px #ffe2a0;
+  animation: mx-polvo 9s ease-in-out infinite;
+  animation-delay: var(--w);
+  scale: var(--s);
+}
+
+@keyframes mx-polvo {
+  0%, 100% { transform: translate(0, 0); opacity: .2; }
+  50% { transform: translate(var(--x), -40px); opacity: .9; }
+}
+
+/* "te lo entrego todo": papeles que cruzan frente a la cámara rumbo al muro */
+#escena-mixtape .mx-papeles i,
+#escena-mixtape .mx-flotantes i {
+  position: absolute;
+  left: 0;
+  width: 8vmin;
+  height: 6vmin;
+  background: #f6f3ec;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+  opacity: 0;
+}
+
+#escena-mixtape .mx-papeles i.azul::after,
+#escena-mixtape .mx-flotantes i.azul::after {
+  content: '';
+  position: absolute;
+  inset: 9% 9% 22%;
+  background: linear-gradient(160deg, #5a8ec8, #1f4e86);
+}
+
+#escena-mixtape.mx-entrego .mx-papeles i {
+  animation: mx-rafaga var(--d) cubic-bezier(.25, .1, .5, 1) var(--w) both;
+}
+
+@keyframes mx-rafaga {
+  0% { opacity: 1; transform: translate(105vw, 30vh) rotate(0) scale(var(--s)); }
+  100% { opacity: 1; transform: translate(-25vw, var(--y)) rotate(var(--g)) scale(calc(var(--s) * .6)); }
+}
+
+/* en el clímax de luz, fotos y papeles flotan hacia arriba en los rayos de sol */
+#escena-mixtape .mx-flotantes i {
+  left: var(--l);
+  width: 6vmin;
+  height: 4.6vmin;
+}
+
+#escena-mixtape.mx-flotan .mx-flotantes i {
+  animation: mx-flota var(--d) linear var(--w) infinite;
+}
+
+@keyframes mx-flota {
+  0% { opacity: 0; transform: translate(0, 105vh) rotate(0); }
+  10% { opacity: .9; }
+  90% { opacity: .9; }
+  100% { opacity: 0; transform: translate(var(--x), -15vh) rotate(var(--g)); }
+}
+
+/* "lo que habíamos sido": película vieja */
+#escena-mixtape .mx-sepia-capa {
+  display: none;
+  background: #6a4420;
+  mix-blend-mode: color;
+  opacity: .62;
+}
+
+#escena-mixtape.mx-sepia .mx-sepia-capa {
+  display: block;
+  animation: mx-aparece 1.4s ease-out both;
+}
+
+#escena-mixtape .mx-rayones {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#escena-mixtape.mx-sepia .mx-rayones {
+  opacity: 1;
+  animation: mx-proyector .14s steps(2) infinite;
+}
+
+#escena-mixtape .mx-rayones i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 246, 220, .45);
+  animation: mx-rayon .5s steps(1) infinite;
+}
+
+#escena-mixtape .mx-rayones i:nth-child(2) { animation-duration: .7s; width: 1px; }
+#escena-mixtape .mx-rayones i:nth-child(3) { animation-duration: .37s; background: rgba(30, 20, 10, .4); }
+
+@keyframes mx-rayon {
+  0% { left: 22%; }
+  25% { left: 71%; }
+  50% { left: 38%; }
+  75% { left: 86%; }
+}
+
+@keyframes mx-proyector {
+  50% { background: rgba(20, 12, 4, .12); }
+}
+
+/* "mientes tanto y duele": falla de video */
+#escena-mixtape .mx-falla {
+  display: none;
+  opacity: 0;
+}
+
+#escena-mixtape.mx-mientes .mx-falla {
+  display: block;
+}
+
+#escena-mixtape.mx-mientes .mx-falla {
+  animation: mx-falla-capa 1.9s steps(1) infinite;
+}
+
+#escena-mixtape .mx-falla i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--c);
+  mix-blend-mode: screen;
+  animation: mx-barra var(--d) steps(2) infinite;
+}
+
+@keyframes mx-falla-capa {
+  0%, 62%, 100% { opacity: 0; }
+  64%, 70%, 86% { opacity: 1; }
+  67%, 88% { opacity: .35; }
+}
+
+@keyframes mx-barra {
+  50% { transform: translate(var(--x), 140%); }
+}
+
+#escena-mixtape.mx-mientes .mx-escenario {
+  animation: mx-rgb 1.9s steps(1) infinite;
+}
+
+@keyframes mx-rgb {
+  0%, 62%, 72%, 84%, 92%, 100% { filter: none; }
+  64%, 86% { filter: url(#mxRGB); }
+}
+
+#escena-mixtape.mx-mientes .mx-mano {
+  animation: mx-tiembla 1.9s steps(1) infinite;
+}
+
+@keyframes mx-tiembla {
+  0%, 62%, 100% { transform: none; }
+  64% { transform: translate(-14px, 3px); }
+  67% { transform: translate(10px, -4px) skewX(-1.5deg); }
+  70% { transform: translate(-4px, 0); }
+  86% { transform: translate(12px, 2px); }
+  88% { transform: translate(-6px, -2px); }
+}
+
+/* película: viñeta + grano en una sola capa; el grano tiembla moviendo solo su fondo */
+#escena-mixtape .mx-pelicula {
+  background-image: radial-gradient(ellipse at 50% 46%, rgba(0, 0, 0, 0) 52%, rgba(4, 4, 12, .62) 100%), var(--ruido);
+  background-size: 100% 100%, 180px 180px;
+  animation: mx-grano .45s steps(1) infinite;
+}
+
+@keyframes mx-grano {
+  0% { background-position: 0 0, 0 0; }
+  20% { background-position: 0 0, -61px 37px; }
+  40% { background-position: 0 0, 53px -88px; }
+  60% { background-position: 0 0, -27px 71px; }
+  80% { background-position: 0 0, 94px 19px; }
+}
+
+#escena-mixtape.mx-c7 .mx-pelicula { opacity: .55; transition: opacity 6s; }
+
+#escena-mixtape .mx-flash {
+  background: #fff8ec;
+  opacity: 0;
+}
+
+#escena-mixtape .mx-flash.on {
+  animation: mx-flash .8s ease-out;
+}
+
+@keyframes mx-flash {
+  0% { opacity: .85; }
+  100% { opacity: 0; }
+}
+
+#escena-mixtape .mx-final {
+  background: #fff4e2;
+  opacity: 0;
+  transition: opacity 3s;
+}
+
+#escena-mixtape.mx-blanco .mx-final { opacity: .9; }
+
+/* ---- letreros de video casero ("hour 31 of finishing our mixtape, mexico city") ---- */
+#escena-mixtape .mx-letrero,
+#escena-mixtape .mx-creditos {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 88vw;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .65), 0 0 18px rgba(0, 0, 0, .4);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity .9s;
+  pointer-events: none;
+}
+
+#escena-mixtape .mx-letrero {
+  font-size: clamp(17px, 3vmin, 36px);
+  letter-spacing: .005em;
+}
+
+#escena-mixtape .mx-letrero.on { opacity: 1; }
+
+#escena-mixtape .mx-creditos {
+  top: calc(50% + max(30px, 5vmin));
+  font-size: clamp(11px, 1.7vmin, 19px);
+  color: rgba(255, 255, 255, .75);
+}
+
+#escena-mixtape.mx-creditos .mx-creditos { opacity: 1; }
+
+/* ---- el teléfono en el piso ---- */
+#escena-mixtape .mx-telefono {
+  position: absolute;
+  right: 9vw;
+  bottom: 9vh;
+  width: min(12.5vmin, 128px);
+  aspect-ratio: 9 / 19;
+  font-size: min(1.25vmin, 12.8px);
+  perspective: 700px;
+  opacity: 0;
+  transition: opacity 1.2s;
+  pointer-events: none;
+}
+
+#escena-mixtape.mx-tel .mx-telefono { opacity: 1; }
+
+#escena-mixtape .tel-cuerpo {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.6em;
+  background: #0c0c10;
+  border: .35em solid #2a2a32;
+  box-shadow: 0 2.4em 2.6em rgba(0, 0, 0, .55), inset 0 0 0 .1em #4a4a56;
+  transform: rotateX(40deg) rotateZ(-16deg);
+}
+
+#escena-mixtape.mx-tel-entra .tel-cuerpo {
+  animation: mx-vibra .12s steps(2) infinite;
+}
+
+@keyframes mx-vibra {
+  50% { transform: rotateX(40deg) rotateZ(-14deg) translateX(.25em); }
+}
+
+#escena-mixtape .tel-pantalla {
+  position: absolute;
+  inset: .3em;
+  overflow: hidden;
+  border-radius: 1.25em;
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+#escena-mixtape .tel-brillo {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.3em;
+  background: linear-gradient(130deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 40%);
+  pointer-events: none;
+}
+
+/* pantalla de bloqueo */
+#escena-mixtape .tel-bloqueo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2.2em;
+  background: radial-gradient(circle at 50% 30%, #ff4ab8 0, #5a2a8a 45%, #0b1430 85%);
+  opacity: 0;
+  transition: opacity .6s;
+}
+
+#escena-mixtape.mx-tel-luz .tel-bloqueo { opacity: 1; }
+
+#escena-mixtape .tel-hora {
+  font-size: 4.2em;
+  font-weight: 300;
+  line-height: 1;
+}
+
+#escena-mixtape .tel-fecha {
+  font-size: .9em;
+  opacity: .85;
+}
+
+#escena-mixtape .tel-aviso {
+  align-self: stretch;
+  margin: 2.4em .6em 0;
+  padding: .7em .8em;
+  border-radius: 1em;
+  background: rgba(255, 255, 255, .22);
+  font-size: .85em;
+  text-align: left;
+  line-height: 1.25;
+}
+
+#escena-mixtape .tel-aviso b {
+  display: block;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* llamadas */
+#escena-mixtape .tel-llamada {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2.6em;
+  background: linear-gradient(to bottom, #2a2f3c, #12141c);
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+#escena-mixtape:is(.mx-tel-llama, .mx-tel-entra, .mx-tel-habla) .tel-llamada { opacity: 1; }
+
+#escena-mixtape .tel-avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4em;
+  height: 4.4em;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6ab8, #c83a8a);
+  font-size: 1.6em;
+  line-height: 1;
+}
+
+#escena-mixtape .tel-nombre {
+  margin-top: .5em;
+  font-size: 1.9em;
+}
+
+#escena-mixtape .tel-estado {
+  margin-top: .2em;
+  font-size: .95em;
+  opacity: .75;
+}
+
+#escena-mixtape .tel-ondas {
+  position: absolute;
+  left: 50%;
+  top: 2.6em;
+  width: 7em;
+  height: 7em;
+  margin-left: -3.5em;
+}
+
+#escena-mixtape .tel-ondas i {
+  position: absolute;
+  inset: 0;
+  border: .12em solid rgba(255, 140, 200, .7);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+#escena-mixtape:is(.mx-tel-llama, .mx-tel-entra):not(.mx-tel-nadie) .tel-ondas i {
+  animation: mx-ondas-tel 1.8s ease-out infinite;
+}
+
+#escena-mixtape .tel-ondas i:nth-child(2) { animation-delay: .6s !important; }
+#escena-mixtape .tel-ondas i:nth-child(3) { animation-delay: 1.2s !important; }
+
+@keyframes mx-ondas-tel {
+  0% { opacity: .9; transform: scale(.6); }
+  100% { opacity: 0; transform: scale(1.7); }
+}
+
+#escena-mixtape.mx-tel-nadie .tel-avatar { opacity: .5; }
+
+#escena-mixtape .tel-linea {
+  width: 80%;
+  height: 2.6em;
+  margin-top: 2.2em;
+  opacity: 0;
+  overflow: visible;
+}
+
+#escena-mixtape.mx-tel-habla .tel-linea { opacity: 1; }
+
+#escena-mixtape .tel-linea path {
+  stroke-dasharray: 1;
+}
+
+/* la llamada en silencio: línea plana... y al final un latido */
+#escena-mixtape.mx-tel-habla .tel-linea path {
+  d: path('M0 20 H70 L80 20 L86 20 L94 20 L100 20 H200');
+}
+
+#escena-mixtape.mx-tel-latido .tel-linea path {
+  d: path('M0 20 H70 L80 20 L86 4 L94 36 L100 20 H200');
+  transition: d .3s;
+  animation: mx-latido-linea 1.1s ease-in-out infinite;
+}
+
+@keyframes mx-latido-linea {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .55; }
+}
+
+#escena-mixtape .tel-botones {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2.2em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#escena-mixtape .tel-botones i {
+  width: 3.4em;
+  height: 3.4em;
+  border-radius: 50%;
+  background: #ff3b30;
+}
+
+#escena-mixtape .tel-botones .contestar {
+  display: none;
+  background: #34c759;
+}
+
+#escena-mixtape.mx-tel-entra .tel-botones .contestar { display: block; }
+
+/* ---- subtítulos de esta canción: letreros de video casero (versos) y mensajes de chat (coro) ---- */
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale) {
+  position: fixed;
+  left: 50%;
+  bottom: 7vh;
+  z-index: 120;
+  width: max-content;
+  max-width: 86vw;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  filter: none;
+  transform: translateX(-50%);
+  text-align: center;
+  line-height: 1.25;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: .005em;
+  text-transform: lowercase;
+  -webkit-text-stroke: 0;
+  color: #fff;
+  pointer-events: none;
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale) .palabra {
+  display: inline-block;
+  transform: none;
+  animation: none;
+  white-space: nowrap;
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro .palabra:nth-child(n) {
+  text-transform: lowercase;
+}
+
+/* las letras aparecen rapidito, como un letrero que se escribe */
+body.cancion-mixtape #subtitulo .letra-sub {
+  display: inline-block;
+  opacity: 0;
+  animation: mx-sub-escribe .3s ease-out forwards;
+  animation-delay: calc(var(--j) * 22ms);
+}
+
+@keyframes mx-sub-escribe {
+  from { opacity: 0; transform: translateY(.18em); }
+  to { opacity: 1; transform: none; }
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-verso,
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-intro {
+  font-size: clamp(19px, 3.5vmin, 40px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .75), 0 0 16px rgba(0, 0, 0, .5);
+}
+
+/* palabras clave: rosa neón como la rueda de la fortuna */
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale) .palabra.clave {
+  color: #ffd8ee;
+  text-shadow: 0 0 .35em rgba(255, 74, 184, .9), 0 0 .8em rgba(255, 74, 184, .45), 0 1px 2px rgba(0, 0, 0, .6);
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale) .eco {
+  margin-left: .3em;
+  font: inherit;
+  font-size: .72em;
+  color: rgba(255, 255, 255, .7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .7);
+  -webkit-text-stroke: 0;
+}
+
+/* CORO: burbujas de mensaje (la mía azul a la derecha, la respuesta gris a la izquierda) */
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .3em;
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(17px, 2.9vmin, 32px);
+  text-shadow: none;
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro .voz {
+  position: relative;
+  display: block;
+  max-width: 72vw;
+  padding: .42em .85em .5em;
+  border-radius: 1.15em;
+  background: linear-gradient(180deg, #2c97ff, #0a74f2);
+  box-shadow: 0 .35em 1.2em rgba(0, 30, 90, .45);
+  text-align: left;
+}
+
+body.cancion-mixtape #subtitulo.sub-coro .voz {
+  transform-origin: 100% 100%;
+  animation: mx-burbuja .5s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+
+/* colita de la burbuja */
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro .voz::before {
+  content: '';
+  position: absolute;
+  right: -.36em;
+  bottom: 0;
+  width: 1.05em;
+  height: 1.05em;
+  background: radial-gradient(circle at 0 0, transparent .66em, #0a74f2 .7em);
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro::after {
+  content: 'entregado';
+  order: 1;
+  margin: -.1em .5em 0 0;
+  font-size: .48em;
+  color: rgba(255, 255, 255, .8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+}
+
+body.cancion-mixtape #subtitulo.sub-coro::after {
+  animation: mx-aparece .3s ease-out .55s both;
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro .eco {
+  order: 2;
+  align-self: flex-start;
+  display: block;
+  margin: .1em 0 0;
+  padding: .4em .8em .46em;
+  border-radius: 1.1em;
+  background: #e9e9ee;
+  color: #141418;
+  font-size: .8em;
+  text-shadow: none;
+  box-shadow: 0 .3em 1em rgba(0, 0, 0, .35);
+}
+
+body.cancion-mixtape #subtitulo.sub-coro .eco {
+  transform-origin: 0 100%;
+  animation: mx-burbuja .5s cubic-bezier(.2, 1.4, .4, 1) 1s both;
+}
+
+body.cancion-mixtape #subtitulo.sub-coro .eco .letra-sub {
+  animation-delay: calc(1s + var(--j) * 14ms);
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro .palabra.clave {
+  color: #fff;
+  text-shadow: 0 0 .4em rgba(255, 255, 255, .8);
+}
+
+body.cancion-mixtape :is(#subtitulo, #subtitulo-sale).sub-coro .eco .palabra.clave {
+  color: #141418;
+  text-shadow: none;
+}
+
+@keyframes mx-burbuja {
+  0% { opacity: 0; transform: translateY(.6em) scale(.6); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes mx-aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* la línea que se va: el letrero se desvanece; el mensaje sube como en el chat */
+body.cancion-mixtape #subtitulo-sale {
+  display: block;
+  opacity: 0;
+}
+
+body.cancion-mixtape #subtitulo-sale.sub-coro {
+  display: flex;
+}
+
+body.cancion-mixtape #subtitulo-sale.sale {
+  animation: mx-sub-sale .55s ease-in forwards;
+}
+
+body.cancion-mixtape #subtitulo-sale.sub-coro.sale {
+  animation: mx-sub-sube .55s ease-in forwards;
+}
+
+@keyframes mx-sub-sale {
+  0% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -.3em); }
+}
+
+@keyframes mx-sub-sube {
+  0% { opacity: 1; }
+  45% { opacity: .15; }
+  100% { opacity: 0; transform: translate(-50%, -3.4em) scale(.92); }
+}
+
+body.cancion-mixtape #start-btn-container .button {
+  box-shadow: .18em .22em 0 #ff4ab8;
+}
+
+body.cancion-mixtape .flower-message {
+  text-shadow: .06em .08em 0 #ff4ab8;
+}
+
+@media (max-width: 480px) {
+  body.cancion-mixtape :is(#subtitulo, #subtitulo-sale) {
+    bottom: 4vh;
+  }
+}
+
+/* en vertical el teléfono va más arriba (los subtítulos ocupan abajo) */
+#escena-mixtape.mx-vertical .mx-telefono {
+  right: 8vw;
+  bottom: 22vh;
+  width: min(24vw, 150px);
+  font-size: min(2.4vw, 15px);
+}
+
+#escena-mixtape.mx-vertical .mx-letrero {
+  white-space: normal;
+  width: 80vw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #escena-mixtape :is(.mx-mano, .mx-pelicula) {
+    animation: none;
+  }
+}
