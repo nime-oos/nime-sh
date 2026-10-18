@@ -1,44 +1,46 @@
-// Subtítulos de "Take on me" (a-ha) en formato LRC: [mm:ss.cc] texto.
+// Subtítulos de "Take on me" (a-ha) traducidos al español, en formato LRC: [mm:ss.cc] texto (mismos tiempos que la letra original).
 // Una línea sin texto oculta el subtítulo. Para re-sincronizar usa sincronizar.html.
 // (El audio dura 3:40: las últimas dos líneas caen en el desvanecido y la última ya no se alcanza a ver.)
+// La escena reacciona a palabras de estas líneas (ver reaccionar() en js/escena-takeonme.js): si se cambia la
+// traducción, hay que revisar esas palabras.
 window.LETRA_TAKEONME_LRC = `
-[00:33.92] Talking away
-[00:37.23] I don't know what I'm to say
-[00:40.04] I'll say it anyway
-[00:42.73] Today is another day to find you
-[00:46.39] Shying away
-[00:48.89] I'll be coming for your love, okay?
-[00:51.39] Take on me (take on me)
-[00:56.96] Take me on (take on me)
-[01:02.56] I'll be gone
-[01:07.34] In a day or two
-[01:13.74] So needless to say
-[01:16.95] I'm odds and ends, but I'm me
-[01:19.52] Stumbling away
-[01:22.57] Slowly learning that life is okay
-[01:25.48] Say after me
-[01:28.60] "It's no better to be safe than sorry"
-[01:31.14] Take on me (take on me)
-[01:37.00] Take me on (take on me)
-[01:42.67] I'll be gone
-[01:47.36] In a day or two
+[00:33.92] Hablando sin parar
+[00:37.23] No sé qué debo decir
+[00:40.04] Lo diré de todos modos
+[00:42.73] Hoy es otro día para encontrarte
+[00:46.39] Tímida, te alejas
+[00:48.89] Iré por tu amor, ¿okay?
+[00:51.39] Tómame (tómame)
+[00:56.96] Acéptame (tómame)
+[01:02.56] Me iré
+[01:07.34] En un día o dos
+[01:13.74] Así que, ni hace falta decirlo
+[01:16.95] Estoy hecho de retazos, pero soy yo
+[01:19.52] Me voy tropezando
+[01:22.57] Aprendiendo despacio que la vida está bien
+[01:25.48] Repite conmigo
+[01:28.60] "No es mejor ir a lo seguro que lamentarse"
+[01:31.14] Tómame (tómame)
+[01:37.00] Acéptame (tómame)
+[01:42.67] Me iré
+[01:47.36] En un día o dos
 [01:55.97]
-[02:33.27] All the things that you say, yeah
-[02:37.37] Is it life, or just to play my worries away?
-[02:42.23] You're all the things I've got to remember
-[02:45.60] You're shying away
-[02:48.53] I'll be coming for you anyway
-[02:51.20] Take on me (take on me)
-[02:55.72] Take me on (take on me)
-[03:01.93] I'll be gone
-[03:06.74] In a day (take on me)
-[03:11.74] Take on me (take me on)
-[03:17.31] Take on me
-[03:19.36] I'll be gone (take on me, take on me)
-[03:24.68] In a day (take me on, take on me)
-[03:30.76] Take on me (take on me)
-[03:36.39] Take me on (take on me)
-[03:42.07] Take on me
+[02:33.27] Todas las cosas que dices, sí
+[02:37.37] ¿Es la vida, o solo un juego para olvidar mis penas?
+[02:42.23] Eres todo lo que tengo que recordar
+[02:45.60] Tímida, te alejas
+[02:48.53] Iré por ti de todos modos
+[02:51.20] Tómame (tómame)
+[02:55.72] Acéptame (tómame)
+[03:01.93] Me iré
+[03:06.74] En un día (tómame)
+[03:11.74] Tómame (acéptame)
+[03:17.31] Tómame
+[03:19.36] Me iré (tómame, tómame)
+[03:24.68] En un día (acéptame, tómame)
+[03:30.76] Tómame (tómame)
+[03:36.39] Acéptame (tómame)
+[03:42.07] Tómame
 [03:45.05]
 `;
 
