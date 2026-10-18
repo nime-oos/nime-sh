@@ -54,7 +54,10 @@
       borron: ['#2a0a1e', '#5a0f2e', '#d81e4a', '#f2c46a', '#8a1a3a', '#1a0612'], base: '#2a0a1e', tinta: '#f2c46a', sombra: '#d81e4a' },
     { id: 'mixtape', enlace: 'alvafro', lado: 'lado O', titulo: 'Alvafro', src: 'musica/LATIN MAFIA, Fred again.. - Alvafro.mp3',
       lrc: window.LETRA_MIXTAPE_LRC, secciones: window.SECCIONES_MIXTAPE,
-      borron: ['#0b1430', '#14244a', '#1e3a6a', '#3ad8ff', '#ff4ab8', '#c8955a'], base: '#0e1a36', tinta: '#f4efe6', sombra: '#ff4ab8' }
+      borron: ['#0b1430', '#14244a', '#1e3a6a', '#3ad8ff', '#ff4ab8', '#c8955a'], base: '#0e1a36', tinta: '#f4efe6', sombra: '#ff4ab8' },
+    { id: 'takeonme', enlace: 'take-on-me', lado: 'lado P', titulo: 'Take on me', src: 'musica/A-ha - Take on me(Sub Español + Lyrics).mp3',
+      lrc: window.LETRA_TAKEONME_LRC, secciones: window.SECCIONES_TAKEONME,
+      borron: ['#f2efe7', '#e2ded6', '#c9c5be', '#1d1c1a', '#fbfaf6', '#8a8680'], base: '#ece8df', tinta: '#1d1c1a', sombra: '#8a8680' }
   ];
 
   // mini portadas dibujadas con marcador
@@ -228,6 +231,26 @@
       '<path d="M8 88 l8 -2 l2 5 l-8 2Z M26 92 l9 -1 l1 5 l-9 1Z" fill="#e8e4dc"/>' +
       '<path d="M36 100 L44 58 M50 100 L44 58 M38 90 H48 M40 80 H47 M42 70 H46" stroke="#c8ccd2" stroke-width="1.6"/><rect x="41" y="55" width="7" height="3" fill="#ff7a2a"/>' +
       '<path d="M41 54 L40 40 H47 L47 54Z" fill="#e04a7a"/><circle cx="43.5" cy="37" r="3.2" fill="#2a1e1a"/><path d="M40 42 L30 30" stroke="#c89a7a" stroke-width="2" stroke-linecap="round"/>' +
+      '</svg>',
+    takeonme: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#f2efe7"/>' +
+      '<path d="M16 8 L92 11 L90 86 L18 84Z M24 16 L85 18 L83 78 L25 77Z" fill="#fbfaf6" fill-rule="evenodd" stroke="#1d1c1a" stroke-width="2.2" stroke-linejoin="round"/>' +
+      '<path d="M24 16 L85 18 L83 78 L25 77Z" fill="#cdc9c2"/><path d="M70 18 L85 18 L83 78 L70 64Z" fill="#a6a29c"/>' +
+      '<path d="M44 18 V60 M70 18 V64 M25 68 L44 60 L70 64 L83 70" stroke="#1d1c1a" stroke-width="1.6" fill="none"/>' +
+      '<path d="M73 24 l7 -5 M73 32 l9 -6 M73 40 l9 -6 M73 48 l9 -6 M73 56 l9 -6 M30 72 q8 -3 16 0 M50 74 q8 -3 16 0" stroke="#1d1c1a" stroke-width="1" opacity=".6" fill="none"/>' +
+      '<path d="M66 50 L35 59" stroke="#1d1c1a" stroke-width="5.6" stroke-linecap="round"/><path d="M66 50 L35 59" stroke="#6d6965" stroke-width="3.6" stroke-linecap="round"/>' +
+      '<path d="M60 77 L61 52 C62 47 66 45 71 45 C76 45 80 47 81 52 L82 77Z" fill="#6d6965" stroke="#1d1c1a" stroke-width="1.2"/><path d="M68.6 46 L73.4 46 L73.4 77 L68.6 77Z" fill="#f4f2ee"/>' +
+      '<path d="M68 41 L68 46 L74 46 L74 41Z" fill="#d6d2cb"/>' +
+      '<path d="M63.5 35 C63.5 29 67 27 71 27 C75 27 78.5 29.5 78.5 35 C78.5 40 75 43 71 43 C67 43 63.5 40 63.5 35Z" fill="#e3e0da" stroke="#1d1c1a" stroke-width="1"/>' +
+      '<path d="M62.6 35.6 C61 27 70 22 76 25 C80 27 81 31 79.6 36 C78.6 32 76 30 72 30.4 C68 30.8 65 32.6 62.6 35.6Z" fill="#4e4a46"/>' +
+      '<circle cx="66.6" cy="35.8" r=".9" fill="#1d1c1a"/><circle cx="70.6" cy="35.8" r=".9" fill="#1d1c1a"/><path d="M66 39.4 Q68 40.8 70 39.4" stroke="#6e6a65" stroke-width=".8" fill="none"/>' +
+      '<circle cx="34" cy="59.4" r="2.6" fill="#d6d2cb" stroke="#1d1c1a" stroke-width=".8"/>' +
+      '<path d="M3 62 C2 50 12 45 19 51 C22 60 22 72 21 80 L4 80Z" fill="#2a1f1b"/>' +
+      '<path d="M7 57 C7 51 16 50 17.5 55.5 C18 61 15 64 11.5 64 C9 64 7 61 7 57Z" fill="#f2d2ba"/>' +
+      '<circle cx="10.4" cy="57" r="2.6" fill="none" stroke="#b8935f" stroke-width=".9"/><circle cx="15.6" cy="56.6" r="2.2" fill="none" stroke="#b8935f" stroke-width=".9"/>' +
+      '<path d="M5 56 C7 50 13 49 17 52 C13 51 9 53 5 56Z" fill="#2a1f1b"/>' +
+      '<path d="M1 100 L4 74 C7 68 18 68 21 74 L24 100Z" fill="#f1ece2" stroke="#4a3631" stroke-width=".8"/><path d="M10 100 L11.5 74 L15 74 L16.5 100Z" fill="#2c2633"/>' +
+      '<path d="M20 76 L31 61" stroke="#f1ece2" stroke-width="4" stroke-linecap="round"/><circle cx="31.6" cy="60.4" r="2" fill="#ecc7ab"/>' +
+      '<path d="M50 40 C44 36 42 31 45 29 C47 28 49 29 50 31 C51 29 53 28 55 29 C58 31 56 36 50 40Z" fill="#d8322a" stroke="#1d1c1a" stroke-width=".8"/>' +
       '</svg>'
   };
   // la escena de "Alvafro" pega estas portaditas en su muro de collage y escribe la lista de canciones a mano
@@ -471,7 +494,7 @@
     elegir(CANCIONES[(i + 1) % CANCIONES.length].id);
   });
 
-  // canción inicial: la del enlace (#humano, #piensas-en-mi, #luna, #labios-rotos, #sone, #luz-de-dia, #ciudad-de-las-luces, #igual-que-ayer, #es-por-ti, #just-the-way-you-are, #cant-take-my-eyes-off-you, #brillas, #virgen, #alvafro) o la del lado A.
+  // canción inicial: la del enlace (#humano, #piensas-en-mi, #luna, #labios-rotos, #sone, #luz-de-dia, #ciudad-de-las-luces, #igual-que-ayer, #es-por-ti, #just-the-way-you-are, #cant-take-my-eyes-off-you, #brillas, #virgen, #alvafro, #take-on-me) o la del lado A.
   // Primero se busca por enlace y luego por id: #alvafro es la canción "Alvafro" (id "mixtape"), no "Piensas en mí" (id "alvafro").
   var hash = decodeURIComponent(location.hash.replace('#', ''));
   var porEnlace = CANCIONES.filter(function (o) { return o.enlace === hash; })[0] || CANCIONES.filter(function (o) { return o.id === hash; })[0];

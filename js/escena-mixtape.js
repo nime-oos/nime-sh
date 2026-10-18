@@ -604,7 +604,9 @@
     el('div', 'foco-nuestro', '', muro).style.cssText = 'left:' + (CX - 220) + 'px;top:' + (CY - 260) + 'px';
     // la lista de canciones del mixtape, escrita a mano y pegada con cinta
     var lista = el('div', 'tracklist', '<b>mixtape ♡</b>', muro);
-    (window.ListaCanciones || []).forEach(function (c) {
+    // el mixtape termina en "Alvafro": las canciones que se agregaron después no van en su lista
+    var pistas = window.ListaCanciones || [], ultima = pistas.map(function (c) { return c.id; }).indexOf('mixtape');
+    (ultima >= 0 ? pistas.slice(0, ultima + 1) : pistas).forEach(function (c) {
       el('span', c.id === 'mixtape' ? 'pista esta' : 'pista', c.lado.replace('lado ', '') + ' · ' + c.titulo.toLowerCase(), lista);
     });
     el('i', 'cinta-f', '', lista);
