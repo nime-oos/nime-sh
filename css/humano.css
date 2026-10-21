@@ -302,10 +302,10 @@ body.sonando .ecualizador i:nth-child(3) { animation-delay: -.35s; }
 #borron.fuera { opacity: 0; transition: opacity .6s steps(5); }
 
 @media (max-width: 480px) {
-  /* en celular las portaditas se acomodan en dos filas (8 y 7) para que se alcancen todas */
+  /* en celular las portaditas se acomodan en dos filas (9 y 8) para que se alcancen todas */
   #discos { top: 14px; left: 10px; gap: 12px 6px; flex-wrap: wrap; max-width: calc(100vw - 20px); }
-  .disco { width: min(46px, calc((100vw - 64px) / 8)); padding: 4px 4px 3px; border-width: 2px; }
-  .disco .portadita { width: calc(min(46px, calc((100vw - 64px) / 8)) - 10px); height: calc(min(46px, calc((100vw - 64px) / 8)) - 10px); }
+  .disco { width: min(46px, calc((100vw - 70px) / 9)); padding: 4px 4px 3px; border-width: 2px; }
+  .disco .portadita { width: calc(min(46px, calc((100vw - 70px) / 9)) - 10px); height: calc(min(46px, calc((100vw - 70px) / 9)) - 10px); }
   .disco-nombre, .disco-lado { display: none; }
   .discos-titulo { font-size: 14px; }
   .flower-message { top: calc(9vh + 56px) !important; }

@@ -279,9 +279,15 @@
   subSale.id = 'subtitulo-sale';
   subSale.setAttribute('aria-hidden', 'true');
   sub.parentNode.insertBefore(subSale, sub.nextSibling);
-  // arma la línea palabra por palabra; lo que va entre paréntesis son coros de fondo
+  // arma la línea palabra por palabra; lo que va entre paréntesis son coros de fondo.
+  // Con SUB_ESPECIAL.traduccion, lo que va después de "|" es la traducción y sale aparte, en .traduccion.
   function mostrar(texto, t) {
-    var esp = window.SUB_ESPECIAL;
+    var esp = window.SUB_ESPECIAL, trad = '';
+    if (esp && esp.traduccion && texto) {
+      var partes = texto.split(/\s*\|\s*/);
+      texto = partes[0];
+      trad = partes[1] || '';
+    }
     if (esp && sub.innerHTML) {
       subSale.className = '';
       void subSale.offsetWidth;
@@ -325,6 +331,12 @@
       });
       sub.appendChild(caja);
     });
+    if (trad) {
+      var tr = document.createElement('span');
+      tr.className = 'traduccion';
+      tr.textContent = trad;
+      sub.appendChild(tr);
+    }
     sub.style.setProperty('--letras', j);
     sub.classList.add('on');
   }

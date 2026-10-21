@@ -57,7 +57,10 @@
       borron: ['#0b1430', '#14244a', '#1e3a6a', '#3ad8ff', '#ff4ab8', '#c8955a'], base: '#0e1a36', tinta: '#f4efe6', sombra: '#ff4ab8' },
     { id: 'takeonme', enlace: 'take-on-me', lado: 'lado P', titulo: 'Take on me', src: 'musica/A-ha - Take on me(Sub Español + Lyrics).mp3',
       lrc: window.LETRA_TAKEONME_LRC, secciones: window.SECCIONES_TAKEONME,
-      borron: ['#f2efe7', '#e2ded6', '#c9c5be', '#1d1c1a', '#fbfaf6', '#8a8680'], base: '#ece8df', tinta: '#1d1c1a', sombra: '#8a8680' }
+      borron: ['#f2efe7', '#e2ded6', '#c9c5be', '#1d1c1a', '#fbfaf6', '#8a8680'], base: '#ece8df', tinta: '#1d1c1a', sombra: '#8a8680' },
+    { id: 'police', enlace: 'every-breath-you-take', lado: 'lado Q', titulo: 'Every breath you take', src: 'musica/The Police - Every Breath You Take (Official Music Video).mp3',
+      lrc: window.LETRA_POLICE_LRC, secciones: window.SECCIONES_POLICE,
+      borron: ['#0b0b0c', '#1c1c1e', '#2e2e31', '#5a5a5e', '#0f0f10', '#d0142c'], base: '#0b0b0c', tinta: '#f2f0ea', sombra: '#d0142c' }
   ];
 
   // mini portadas dibujadas con marcador
@@ -251,6 +254,20 @@
       '<path d="M1 100 L4 74 C7 68 18 68 21 74 L24 100Z" fill="#f1ece2" stroke="#4a3631" stroke-width=".8"/><path d="M10 100 L11.5 74 L15 74 L16.5 100Z" fill="#2c2633"/>' +
       '<path d="M20 76 L31 61" stroke="#f1ece2" stroke-width="4" stroke-linecap="round"/><circle cx="31.6" cy="60.4" r="2" fill="#ecc7ab"/>' +
       '<path d="M50 40 C44 36 42 31 45 29 C47 28 49 29 50 31 C51 29 53 28 55 29 C58 31 56 36 50 40Z" fill="#d8322a" stroke="#1d1c1a" stroke-width=".8"/>' +
+      '</svg>',
+    police: '<svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#0b0b0c"/>' +
+      '<rect x="8" y="6" width="84" height="54" fill="#3a3a3e"/><path d="M8 33 H92 M36 6 V60 M64 6 V60" stroke="#141416" stroke-width="2.4"/>' +
+      '<circle cx="78" cy="19" r="8" fill="#efede6"/><path d="M8 52 L20 46 L26 50 L40 44 L52 49 L66 45 L80 50 L92 46 V60 H8Z" fill="#121214"/>' +
+      '<path d="M44 0 L52 0 L74 100 L22 100Z" fill="#fff" opacity=".1"/>' +
+      '<path d="M28 100 L30 74 C32 66 38 62 46 62 C54 62 60 66 62 74 L64 100Z" fill="#2c2c2e"/>' +
+      '<path d="M66 92 C54 92 50 84 52 76 C54 70 52 66 56 62 C58 58 58 52 62 48 L66 22 L70 22 L70 48 C74 52 74 58 76 62 C80 66 78 70 80 76 C82 84 78 92 66 92Z" fill="#5a554e" stroke="#0b0b0c" stroke-width="1.2"/>' +
+      '<path d="M54 80 C54 72 56 68 58 64 M78 80 C79 74 78 70 76 66" stroke="#f2f0ea" stroke-width="1.6" fill="none" opacity=".75"/>' +
+      '<path d="M68 22 V82" stroke="#0b0b0c" stroke-width="3"/><path d="M66 16 h4 v6 h-4Z" fill="#3a3632"/>' +
+      '<path d="M46 26 C55 26 58 33 58 41 C58 51 52 58 46 58 C40 58 34 51 34 41 C34 33 37 26 46 26Z" fill="#f4f2ec" stroke="#8d877c" stroke-width="1"/>' +
+      '<path d="M37 38 C39 34 43 34 44 37 C43 40 39 41 37 38Z M55 38 C53 34 49 34 48 37 C49 40 53 41 55 38Z" fill="#0b0b0c"/>' +
+      '<path d="M43 28 L49 28 L46 34Z M35 41 L39 42 L37 46Z M57 41 L53 42 L55 46Z" fill="#d0142c"/>' +
+      '<circle cx="42" cy="50" r="1" fill="#0b0b0c"/><circle cx="46" cy="51" r="1" fill="#0b0b0c"/><circle cx="50" cy="50" r="1" fill="#0b0b0c"/><circle cx="46" cy="54.5" r="1" fill="#0b0b0c"/>' +
+      '<circle cx="46" cy="42" r="20" fill="#fff" opacity=".08"/>' +
       '</svg>'
   };
   // la escena de "Alvafro" pega estas portaditas en su muro de collage y escribe la lista de canciones a mano
@@ -494,7 +511,7 @@
     elegir(CANCIONES[(i + 1) % CANCIONES.length].id);
   });
 
-  // canción inicial: la del enlace (#humano, #piensas-en-mi, #luna, #labios-rotos, #sone, #luz-de-dia, #ciudad-de-las-luces, #igual-que-ayer, #es-por-ti, #just-the-way-you-are, #cant-take-my-eyes-off-you, #brillas, #virgen, #alvafro, #take-on-me) o la del lado A.
+  // canción inicial: la del enlace (#humano, #piensas-en-mi, #luna, #labios-rotos, #sone, #luz-de-dia, #ciudad-de-las-luces, #igual-que-ayer, #es-por-ti, #just-the-way-you-are, #cant-take-my-eyes-off-you, #brillas, #virgen, #alvafro, #take-on-me, #every-breath-you-take) o la del lado A.
   // Primero se busca por enlace y luego por id: #alvafro es la canción "Alvafro" (id "mixtape"), no "Piensas en mí" (id "alvafro").
   var hash = decodeURIComponent(location.hash.replace('#', ''));
   var porEnlace = CANCIONES.filter(function (o) { return o.enlace === hash; })[0] || CANCIONES.filter(function (o) { return o.id === hash; })[0];
