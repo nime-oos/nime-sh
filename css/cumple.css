@@ -1,0 +1,38 @@
+/* Video vertical del cumpleaños de Javiera (cumple.html): el canvas 1080x1920 se ajusta a la pantalla sin recortarse */
+html, body { margin: 0; height: 100%; background: #0b0508; overflow: hidden; }
+#marco { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#lienzo {
+  display: block;
+  width: min(100vw, 100dvh * 9 / 16);
+  height: auto;
+  aspect-ratio: 9 / 16;
+  background: #000;
+  cursor: pointer;
+}
+#portada {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0 16px max(6vh, 32px);
+  background: linear-gradient(to top, rgba(11, 5, 8, .85), rgba(11, 5, 8, 0) 45%);
+  font-family: Montserrat, system-ui, sans-serif;
+}
+#portada[hidden], #cp-pausa[hidden] { display: none; }
+.cp-tarjeta { width: min(420px, 100%); display: flex; flex-direction: column; gap: 10px; text-align: center; }
+.cp-boton {
+  font: 800 17px/1 Montserrat, system-ui, sans-serif;
+  padding: 16px 20px; border: 0; border-radius: 999px; cursor: pointer;
+  color: #3a1405; background: linear-gradient(180deg, #fff1c9, #f2bf5e);
+  box-shadow: 0 8px 30px rgba(242, 170, 60, .35);
+  text-decoration: none;
+}
+.cp-boton:disabled { opacity: .6; cursor: progress; }
+.cp-boton.cp-sec { color: #fff4e6; background: rgba(255, 255, 255, .12); box-shadow: none; border: 1px solid rgba(255, 255, 255, .25); font-weight: 600; }
+#cp-aviso { margin: 4px 0 0; color: rgba(255, 244, 230, .75); font: 500 13px/1.45 Montserrat, system-ui, sans-serif; }
+#cp-pausa {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 96px; height: 96px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, .45); color: #fff; font-size: 40px; pointer-events: none;
+}
+/* mientras se graba no se ve nada encima (ni el cursor) */
+body.cp-grabando #lienzo { cursor: none; }
